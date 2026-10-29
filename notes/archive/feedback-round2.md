@@ -1,0 +1,21 @@
+- [17:47:27] (驚訝｜上一個動作 #8 gather) gather target=stone：預期挖一格 stone 得 1 cobblestone，結果耗時 120 秒（逾時），訊息『挖掉 15 個 stone，撿到 5 個 cobblestone』，背包變化 dirt+3 cobblestone+5 crafting_table+1（我沒要工作台，不知哪來的；也有 10 個 cobble 沒撿到）。單一 gather 會連續挖很多格，耗時不可控，且回報不一致。warning=timed_out_but_goal_met
+- [17:47:28] (難用｜上一個動作 #8 gather) craft 沒有 count 參數：oak_planks 每次 act 只做一次(4 個)，要多個產物只能重複下很多次 act，浪費動作預算。
+- [17:48:05] (難用｜上一個動作 #10 gather) gather target=stone 一次 act 會連挖一大串(單次 45~120 秒)，無法指定數量/count；我用 cancel 中止，訊息 action_did_not_settle_after_cancel。把 3 個 gather 串在同一行 bash 會逾時被丟背景，很難管理。建議 gather 加 count 參數。
+- [17:50:45] (錯誤｜上一個動作 #13 gather) gather target=iron_ore：obs 明明列出 iron_ore@292,63,215 距離 3.7，block 查詢也說『實心 可挖』，但回傳 no_inventory_change『沒有挖到任何 iron_ore』，位移 8.8 格，手上拿著 cobblestone，背包還少了 cobblestone-2 dirt-1 (像是被拿去墊/擋方塊)，原因完全看不出來。
+- [17:51:42] (難用｜上一個動作 #20 gather) gather 對『被泥土/石頭完全包住』的礦(iron_ore@292,63,215)會失敗兩次且沒說明原因(no_inventory_change)；要先自己 dig down 兩次、到同層鄰近後才成功。沒有「移動到指定座標」的動作，只有 approach <方塊名>(停在 3 格外)，埋在地下的礦很難到達。建議：gather 能自動挖通路，或新增 goto x y z。
+- [17:51:42] (驚訝｜上一個動作 #20 gather) dig direction=down：回傳 ok 且 was=dirt now=air，但 obs 立刻顯示 y 沒變，緊接著第二次 dig down 回 nothing_to_dig(1ms)；過一下 obs 才顯示已掉落 1 格。act 回傳時 bot 還沒落地，狀態不同步，浪費一次動作。
+- [17:54:16] (錯誤｜上一個動作 #23 pickup_items) gather target=iron_ore(#22)：訊息說『挖掉 1 個 iron_ore，但沒有撿到 raw_iron』，find 顯示 iron_ore 少了一個(294,50,218?)，附近 obs 沒有 raw_iron 掉落物，疑似掉落物被吞或在看不到的位置，白白少了一顆鐵。另 pickup_items 之後 bot 被搬到地面(+6 y)，耗 35 秒只撿了一顆蛋，沒說明它爬回地面。
+- [17:55:10] (缺少｜上一個動作 #26 staircase) 沒有『轉向/面向某方向』也沒有『移動到座標』的動作。staircase/branch_mine/dig forward 都往 bot 當前面向走，而我無法控制面向，只能碰運氣；staircase targetY=54 我想往南(礦在南)，結果往北挖了 9 格，礦反而更遠。建議 staircase/branch_mine 加 direction=north|south|east|west 參數，或新增 face/goto。
+- [17:55:10] (驚訝｜上一個動作 #26 staircase) staircase 手持 wooden_pickaxe(耐久 2/59) 在挖 stone，明明背包有 stone_pickaxe；auto-equip 選了較差的工具，另外之前 #21 被 watchdog 中斷但訊息寫『原因：已完成所有層數』卻 descended 6 / target 51(沒到)，自相矛盾。
+- [17:59:19] (難用｜上一個動作 #31 pickup_items) pickup_items：鐵礦被 gather 挖掉後掉落物散在 y51~53 的空洞，pickup_items 兩次(radius=8 name=raw_iron)一次回 nothing_picked_up 一次 timeout 95 秒；最後是我自己 dig down 到同層才撿到。gather 回報『挖掉 8 個 iron_ore 撿到 1 個』，其餘 7 顆掉落物散落，但 gather 不會回頭撿，也沒說掉在哪。
+- [18:03:28] (錯誤｜上一個動作 #38 staircase) staircase targetY=12(從 301,52,235 起)：往西挖(無法選方向)，挖進河底下的含水層後隧道被水淹，bot 在水裡每格要約 1 分鐘，整個 act 跑了 8+ 分鐘仍不結束，無進度回報，我只能 cancel。staircase 偵測了岩漿卻沒偵測水/淹水。且 act 沒有逾時上限，會一直卡。
+- [18:03:34] (建議｜上一個動作 #39 approach) 更正前一則 staircase 回饋：#38 其實 160 秒下降 33 層(位移 -38,-33,0)並非卡死，是我看 obs 的 y 變化太慢誤判；但 act 長時間無進度輸出（一個指令阻塞 2+ 分鐘，超出工具逾時被丟背景）讓人以為卡住。建議 act 回傳中間進度，或 staircase 有 steps 上限預設較小。cancel 後仍有 action_did_not_settle_after_cancel。
+- [18:06:13] (錯誤｜上一個動作 #42 staircase) staircase targetY=2 穿過礫石層：卡在 256,16,235 約 5 分鐘不動(只剩耐久慢慢掉：iron_pickaxe 121→119)，模式一直 gather，沒有 timeout、沒有錯誤；礫石會掉落補回通道導致原地空轉。我 cancel 後訊息 stair 仍沒輸出。
+- [18:13:32] (缺少｜上一個動作 #53 staircase) 被困在礫石+小水坑(y15-16)：dig down 一直 timeout{block:water}(把腳邊的水當挖掘目標)，staircase 在原地空轉。沒有「排水/放方塊填水」的明確動作、也沒有轉向或 goto，無法換位置離開。
+- [18:20:47] (錯誤｜上一個動作 #64 dig) dig direction=down 在水坑中連續 timeout(25 秒) {block:water} 六次，我違反了『同參數失敗兩次不重試』才發現；dig 的結果沒告訴我『目標是水所以挖不了、請先處理水』，而是泛泛 timeout，且沒有『填水/放方塊』的直接動作可用。
+- [18:21:13] (驚訝｜上一個動作 #66 build) build target=floor：訊息『共放置 9 個 cobblestone 方塊』但 details.blocksPlaced=3、背包 cobblestone 只減 3，訊息與實際不符。
+- [18:21:20] (難用｜上一個動作 #66 build) obs 的位置是四捨五入的座標(254,14,236)，但 bot 實際所在方塊是 floor 後的 (254,14,235)；我用 block 查『腳下』得到 air/stone，與 obs『腳下 water』矛盾，害我誤判位置。希望 obs 同時給 block 座標(floor)或小數座標。
+- [18:23:17] (錯誤｜上一個動作 #69 staircase) staircase targetY=0：實際在 Y=0 完成(訊息『階梯下礦完成 最終深度 Y=0 共挖 15 層』)，但 act 沒有回傳，又空轉約 3 分鐘直到我 cancel，結果被標成 cancelled/失敗。完成了卻不結束，浪費時間與動作；另外它手持 stone_pickaxe 而不是背包裡的 iron_pickaxe。
+- [18:23:44] (錯誤｜上一個動作 #71 gather) gather target=deepslate_diamond_ore(#71)：回『挖掉 1 個 deepslate_diamond_ore，沒撿到 diamond』，但 bot 只位移 (0,1,0)，最近的鑽石在 10 格外；find 顯示 241,1,252 的礦消失了(14 格外)，附近 obs 沒有 diamond 掉落物。訊息與實際對不上，鑽石掉去哪了無從得知。
+- [18:30:01] (建議｜上一個動作 #88 branch_mine) branch_mine length=2 一次成功撿到 diamond+2，比 gather/pickup_items 好用：它推進、挖礦脈、並自動撿掉落物。gather 對深處礦常回『挖掉但沒撿到』。建議 gather 在挖到礦後一定走過去撿，或 pickup_items 能自己挖路。
+- [18:36:25] (建議｜上一個動作 #99 craft) 整體：最大痛點是(1)沒有轉向/goto，只能靠 approach 副作用轉向；(2) obs 座標四捨五入與方塊 floor 不一致；(3) gather 長距離遠端挖礦卻不撿掉落物、單次 act 耗時不可控；(4) staircase/gather 完成後不回傳或空轉；(5) craft 無 count；(6) 工具耐久沒有自動選好工具、iron_pickaxe 被用到壞(tool_lost) 沒預警。

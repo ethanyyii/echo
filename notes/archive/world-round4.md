@@ -1,0 +1,2 @@
+- [2026/10/6 20:52:01] 進度: 有石鎬、熔爐、工作台、coal19、cobble66、planks7、log4。branch_mine 好用(自動撿)，gather 地下礦常失敗。基地約(-231,55,152) 地下。下一步: smelt raw_iron->craft iron_pickaxe->staircase 到 y~-58 找鑽石
+- [2026/10/6 21:06:58] 已完成: 背包有 diamond_pickaxe

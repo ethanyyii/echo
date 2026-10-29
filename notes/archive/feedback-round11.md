@@ -1,0 +1,4 @@
+- [17:58:44] (驚訝｜上一個動作 #21 staircase) staircase 往下挖 33 層，背包火把 8 支被用掉 7 支（自動插火把），訊息只說『已插上火把』，沒說一共插了幾支；我原本以為只是在需要時插 1-2 支。深礦需要火把時變成不夠。
+- [18:00:34] (難用｜上一個動作 #22 staircase) staircase 沒指定 tool 時用掉 wooden/stone 鎬把它們耗到快壞（stone 27→4），深板岩上很慢；不知道自動選擇的邏輯。
+- [18:05:50] (錯誤｜上一個動作 #35 goto) gather deepslate_diamond_ore：回報『挖了 1 個但背包 0 diamond』ok=false，但鑽石其實已經掉在 1 格外的空氣中（obs 生物列表看得到 item:diamond）；pickup_items 回『走不到』、goto range=0 回『已到達』卻沒移動也沒撿到、approach 同樣；最後是 goto 到相鄰實心方塊的格子（失敗）時才順便走過去撿到。花了 5 次 act。
+- [18:07:00] (難用｜上一個動作 #37 craft) 沒有直接的『用 act 看某動作做完整體摘要』；每個 gather 都靠 obs 再查，且 gather/staircase 長途挖掘（約 60-100 秒/次）會把耐久耗在低階鎬上，難預測。另 craft count=2 stick 實得 4（count 是配方次數×產量而非件數，count=12 planks 卻剛好 12），語意不一致。

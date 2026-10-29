@@ -1,0 +1,3 @@
+- [2026/10/6 18:00:36] 進度: 有 iron_pickaxe(若 craft 成功)、table/furnace 在背包、sticks 剩 2 給鑽鎬。鐵礦群 300,52,234(已挖)。需找鑽石 y<16。
+- [2026/10/6 18:30:01] 已有 2 diamond, iron_pickaxe, 2 sticks。需第3顆鑽石 + crafting table 在背包。鑽石礦在 249,0,258 / 252,-1,238。教訓: approach <entity> 會把 bot 轉向目標方向(yaw π=南, 1.57=西, -1.57=東)；branch_mine 會推進並撿礦。
+- [2026/10/6 18:36:26] 完成: diamond_pickaxe 已在背包 (act 約 99 次)

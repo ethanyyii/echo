@@ -1,0 +1,7 @@
+- [15:16:32] (難用｜上一個動作 #10 gather) gather target=cobblestone：找不到(因為世界裡是 stone)，白費 1 次 act 還被移動了 12/4/-20 格。想要拿到圓石，要知道必須用 target=stone，建議 target 接受掉落物名或回傳提示『你是不是要 stone』
+- [15:16:44] (驚訝｜上一個動作 #11 gather) gather target=stone：只挖了 1 個 stone_bricks（不是 stone/cobblestone），訊息有說但名字被模糊匹配到 stone_bricks，且只拿到 1 個、非預期（我要的是圓石）
+- [15:17:01] (難用｜上一個動作 #12 gather) gather target=stone 連兩次都模糊匹配到 stone_bricks/mossy_stone_bricks（各只挖 1 個，2 次 act 白費），明明 5 格外就有真的 stone。target 沒有精確匹配選項、不能指定座標，找真正的 stone 得先用 find 再 goto 再 dig
+- [15:21:13] (錯誤｜上一個動作 #22 pickup_items) gather iron_ore count=3：回報『挖掉3個 iron_ore 但沒撿到 raw_iron』，ok=false；位置在(894,62,-935)，距離7格高度差-7，我人完全沒移動，卻說挖掉3個？疑似從遠處挖到、掉落物不見，pickup_items 也找不到，礦白白損失
+- [15:27:42] (難用｜上一個動作 #33 staircase) staircase 遇到下方洞穴(落差10格)會直接停，east/west/north/south 都試過浪費 3 次 act；沒有『自動換方向／繞開空洞／自己搭台階』的選項，也沒有一個簡單的往下挖一格（dig down 要一格一次）
+- [15:31:32] (錯誤｜上一個動作 #37 staircase) staircase 往深層(deepslate)挖 55 層後，三把鎬(wooden/stone/iron，其中 iron 還剩 150/250)全部耗盡，沒有任何預警（staircase 沒回報耐久，也沒有『耐久低於 X 就停下』的保護），訊息只說『工具不夠』。結果我在鑽石旁邊卻沒有可用的鎬，必須回地表重新取鐵。deepslate 挖起來比預期耗鎬很多，且 staircase 不會自己 craft 新鎬
+- [15:36:12] (錯誤｜上一個動作 #45 pickup_items) gather deepslate_diamond_ore count=3：回報『挖掉3個但沒撿到』，ok=false，我人只移動1格、目標(959,-45,-981)在14格外；目標點已變成 air、附近也找不到 diamond 掉落物(pickup_items radius=25 也找不到)。和先前 iron_ore 同樣模式——遠距離挖掉礦但掉落物消失，珍貴的鑽石可能就這樣被吃掉。鑽石是稀有資源，這個行為代價很大。另外它顯示『直接走過去失敗(Took too long to decide path)』後怎麼挖到的、挖了什麼過程不透明

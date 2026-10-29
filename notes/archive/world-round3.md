@@ -1,0 +1,1 @@
+- [2026/10/6 19:16:57] base ~57,68,188 savanna. have furnace, stone_pickaxe, cobble. need iron x3, diamond x3, coal. copper_ore@48,59,182 lapis@59,61,188

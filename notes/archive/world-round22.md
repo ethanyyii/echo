@@ -1,0 +1,1 @@
+- [2026/10/8 18:59:51] API 中斷：Minecraft 連線斷線後 Agent API 無回應 (fetch failed)，蓋房進度 0，背包原有 17 spruce_log

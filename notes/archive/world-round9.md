@@ -1,0 +1,1 @@
+- [2026/10/7 16:41:20] 進度: 已有 iron_pickaxe, 2 stick, 3 coal, furnace, 2 crafting_table. 位置 1592,47,-439 地底. 下一步: staircase 往 y=-58 找鑽石(需3顆)+做 diamond_pickaxe

@@ -1,0 +1,6 @@
+- [16:35:55] (驚訝｜上一個動作 #14 craft) craft stone_pickaxe 後工作台掉在地上沒收回(訊息有說)；接著 craft furnace 時背包沒工作台所以它自動用4塊木板又做了一個新工作台，放置失敗(找不到方塊)，木板白白浪費4個、地上多一個掉落桌子。要先 pickup_items 才對，但 craft 沒提醒。
+- [16:35:55] (錯誤｜上一個動作 #14 craft) obs 顯示『氧氣 3』但我站在草地上、頭上是空氣，不是在水裡；不知道是什麼數字(氧氣值應為20)
+- [16:42:16] (錯誤｜上一個動作 #23 staircase) staircase targetY=-56 direction=east：背包有 iron_pickaxe(249/250)，但它一直用 stone_pickaxe 挖到只剩4耐久才停，訊息說『沒有別的工具能挖 diorite』，與事實不符(鐵鎬當然能挖)。『每個方塊自動選最適合的工具』似乎有選錯/或把鐵鎬排除在外。
+- [16:47:45] (驚訝｜上一個動作 #31 craft) staircase 用 iron_pickaxe 挖 deepslate 耗掉約210耐久(69步)，而且在38耐久時以『貴重工具』為由拒絕再挖；不指定 tool 時卻用石鎬。工具選擇策略不透明，且 gather 的訊息『stone_pickaxe 耐久只剩4，沒有別的工具能挖 deepslate』又與背包有鐵鎬/新石鎬不符。
+- [16:47:45] (難用｜上一個動作 #31 craft) gather/staircase 每次都因『Took to long to decide path』先失敗再改挖通道，每個動作 60-90 秒；單次 gather 還會順手挖大量無關方塊(通道)。
+- [16:47:45] (建議｜上一個動作 #31 craft) obs 的 位置 y 與 所在方塊 y 的關係、氧氣數字(地面顯示3/10)很令人混淆；place_block 目標座標若我以為是空氣卻是 grass_block 浪費一次 act，希望 obs 能標示腳下方塊座標。

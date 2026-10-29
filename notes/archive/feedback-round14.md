@@ -1,0 +1,5 @@
+- [09:53:16] (錯誤｜上一個動作 #5 gather) gather target=oak_log count=6：結果標示 ✗ no_inventory_change（失敗），但背包實際多了 birch_log+5（不是 oak_log），訊息說『這棵樹只有 5 根』。矛盾：背包有變化卻判失敗；而且 target=oak_log 拿到的是 birch_log，沒說明為什麼。動作耗時 51 秒、位移 41 格。
+- [10:09:12] (錯誤｜上一個動作 #28 craft) gather target=oak_log count=6：回傳 ✗ no_inventory_change，但背包實際 birch_log+5（不是 oak_log），訊息只說『這棵樹只有 5 根』。背包有變化卻判失敗，與 verifier 的判定矛盾，而且目標樹種跟要求不同卻沒說明。
+- [10:09:12] (驚訝｜上一個動作 #28 craft) craft furnace 的結果：除了 cobblestone-8、furnace+1，還寫『wooden_pickaxe 38→37』。我沒有用鎬去挖東西，推測是自動放置工作台又回收時用掉耐久；但訊息沒說明。
+- [10:09:12] (難用｜上一個動作 #28 craft) tunnel_to 往下挖 55 格到 y=11 花了 4 次呼叫（每次約 98 秒），而且每次只能看到『還差 N 格』。沒有任何方式讓我知道路上有沒有岩漿或洞穴，除非看 partial 的訊息。另外每次通道都順便挖掉 raw_copper／cobblestone，背包被塞滿（cobblestone 163、dirt 33、raw_copper 30），沒有丟棄動作可以清。
+- [10:09:12] (建議｜上一個動作 #28 craft) obs 的『資源』欄每種礦只列最近一格，要找第 2、3 顆鑽石只能用 find diamond_ore。希望資源欄能列出每種礦的數量或最近幾格。另外 gather 挑目標是依照『目前位置』的最近距離，所以第 3 顆鑽石會變成另一層的 deepslate_diamond_ore（y=-8），這點應該在結果中說清楚。

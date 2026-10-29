@@ -1,0 +1,9 @@
+- [21:34:09] (驚訝｜上一個動作 #15 gather) gather target=oak_log：預期砍一格，結果整棵樹15根原木+1 dirt，耗時74秒；訊息『砍了一棵樹』算清楚，但耗時很長
+- [21:34:30] (驚訝｜上一個動作 #18 craft) craft wooden_pickaxe：自動放了工作台但沒撿回（訊息有說），要額外 pickup_items；預期會自動回收
+- [21:35:50] (難用｜上一個動作 #20 gather) gather target=stone：預期挖一格/幾格，結果挖15個、68秒；背包也多了6根stick和2樹苗(連帶撿起)；obs顯示氧氣0/low_oxygen但人在草地上，疑似錯誤警告
+- [21:39:09] (錯誤｜上一個動作 #26 pickup_items) 第二次 gather target=iron_ore：回報『挖掉3個iron_ore但沒撿到raw_iron』，但該處附近只剩銅礦/石頭，find 顯示最近鐵礦在25格外；看起來把別的方塊(copper?)算成iron_ore或掉落物走不到，白花27秒一次act。obs 的 資源 行也沒列鐵礦
+- [21:41:06] (難用｜上一個動作 #31 tunnel_to) gather iron_ore 兩次都『挖掉N個但沒撿到』：礦被挖掉後掉落物落在封閉的小空間(走不到)，gather 本身不處理撿不到，pickup_items 也說走不到；最後靠 tunnel_to 到掉落物座標才撿起。建議 gather 在撿不到時自動挖路過去撿，或訊息明講掉落物座標
+- [21:44:03] (錯誤｜上一個動作 #35 staircase) craft name=torch count=8：訊息說成功、coal-2 stick-2，但背包沒有火把(obs 背包火把 0)，被標 no_inventory_change；材料消失、火把去向不明(可能掉地上?)
+- [21:44:03] (難用｜上一個動作 #35 staircase) staircase 自動選工具，把石鎬耐久用到3/131、木鎬3/59，卻沒優先用耐久滿的鐵鎬；它還亂挖 cobblestone 140 顆。單次100秒上限使 23 層就被切斷
+- [21:44:45] (建議｜上一個動作 #37 staircase) find diamond_ore 一次列出 diamond_ore 與 deepslate_diamond_ore 很好；但想要一個『能不能走到、需要挖幾格』的資訊
+- [21:48:55] (驚訝｜上一個動作 #46 craft) goto 在大洞穴懸空處：第1次(range=2,距離12)失敗，一個動作之後換較近目標卻成功並自動搭了5格鵝卵石橋(cobblestone-5)；訊息沒提它會消耗方塊搭橋，且失敗訊息誤導說『目標在水裡』

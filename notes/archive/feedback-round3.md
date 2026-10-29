@@ -1,0 +1,6 @@
+- [19:14:52] (錯誤｜上一個動作 #6 craft) craft wooden_pickaxe 站在樹冠 acacia_leaves 上：找不到地方放工作台，但背包 acacia_planks-4 crafting_table+1（合成了工作台卻放不下，ok=false）。預期要嘛不消耗，要嘛成功；工作台留在背包裡可再用，但訊息沒說。且站在樹冠上本身不該找不到地方。
+- [19:19:46] (錯誤｜上一個動作 #16 gather) gather iron_ore 第二次：訊息說挖掉2個iron_ore但沒撿到 raw_iron，背包只多 cobblestone+7；被 watchdog 打斷說卡在地形。預期 iron_ore 用石鎬挖應掉 raw_iron，掉落物可能沈入水中/落在水下，API 沒告訴我掉落物在哪。obs 生物欄有 item 但是只有 cobblestone。
+- [19:21:41] (建議｜上一個動作 #17 gather) gather 在水下/水中礦區反覆逾時（106 秒、只多 cobblestone），沒有說明為何耗時：在做什麼（挖路？游泳？）。希望 gather 失敗時回報具體階段（找到目標/路徑/挖掘/撿拾）與目標座標。
+- [19:23:04] (難用｜上一個動作 #19 dig) dig direction=down 手持 acacia_log，沒自動換鎬子，挖石頭逾時25秒（空轉）。gather 會自動裝備工具但 dig 不會，不一致；也沒提示『手持工具不對』。
+- [19:24:15] (錯誤｜上一個動作 #23 goto) goto 62,63,177 range=2：訊息『已到達 (62,63,177) 附近，距離 15 格』自相矛盾，耗時 30ms 就失敗（其實沒路徑，因為我被困在封閉的地下水坑）。應直接說『無路徑』。另外 map top 俯視圖顯示我在地表草地，但我實際在地下 y=52 的封閉水坑，頭上有 8 格石頭，top 圖完全看不出被埋；建議 obs 提示『頭上有N格實心方塊/封閉空間』。
+- [19:29:23] (難用｜上一個動作 #38 branch_mine) 困在地下含 bubble column 的水中洞穴約 15 個 act：gather/branch_mine/pillar/surface/staircase 全部因水流與氣泡柱失敗或逾時（60-105 秒），各自只說『卡在地形』『前方有水』。想要：obs 提示『你被氣泡柱拉扯』，以及一個 escape/exit_to_surface 類動作（自動挖+墊方塊往上）。branch_mine 每次只前進 1 格就被 watchdog 中斷。

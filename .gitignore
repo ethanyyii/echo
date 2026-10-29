@@ -1,0 +1,13 @@
+node_modules/
+.env
+.*_signal
+*.log
+logs/
+__pycache__/
+
+# added for public release
+*_signal
+*.jsonl
+.env.*
+!.env.example
+notes/archive/legacy/

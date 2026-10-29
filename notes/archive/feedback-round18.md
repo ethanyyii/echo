@@ -1,0 +1,4 @@
+- [14:52:59] (難用｜上一個動作 #17 attack) gather target=spruce_log count=12：第一次 gather count=6 只拿到 5 根（有說明），但第二次 gather 位移 24 格、背包沒增加、只拿到 oak_sapling，途中被骷髏打到 HP 16→9.5。gather 沒有說明它會跑去哪棵樹、為何換了樹種；耗時 17 秒。
+- [14:52:59] (錯誤｜上一個動作 #17 attack) gather target=spruce_log 第二次：ok=false 但訊息寫『伐木結束』，背包 spruce_log 沒變，位移 24 格，中途自己換成 oak 樹並撿到 oak_sapling，訊息不符實際發生的事。
+- [14:53:13] (錯誤｜上一個動作 #18 craft) obs 的位置與血量前後不一致：兩次 obs 之間（中間只有一個 gather 和一個 attack）位置從 (-277,66,233) 跳到 (-251,69,279)，HP 從 3.5 變成 20，但背包只多了 planks（craft 之後），看不出中間發生了什麼。我無法判斷哪個資訊是真的。
+- [14:53:14] (驚訝｜上一個動作 #18 craft) attack skeleton 只回 interrupted/flee，位移 2 格，沒有說明骷髏在哪、為什麼是撤退。

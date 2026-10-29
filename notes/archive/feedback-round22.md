@@ -1,0 +1,1 @@
+- [18:59:41] (錯誤｜上一個動作 #16 gather) gather 連續呼叫期間 events 顯示 disconnected socketClosed，之後 act 回 busy（#17 gather 永遠在進行中），obs 位置不再更新

@@ -1,0 +1,1 @@
+- [2026/10/7 15:19:14] 基地約 914,70,-943 附近；有 crafting_table/furnace 在背包；已有 stone_pickaxe 煤6；gather 要用 target=stone 不是 cobblestone
